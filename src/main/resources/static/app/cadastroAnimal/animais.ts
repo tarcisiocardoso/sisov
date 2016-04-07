@@ -1,7 +1,9 @@
-export class Hero {
+export class Animal {
   constructor(
     public id: number,
-    public name: string,
+    public identificador: string,
+    public dtNascimento: string,
+    
     public power: string,
     public alterEgo?: string
   ) {  }

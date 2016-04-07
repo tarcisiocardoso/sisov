@@ -1,21 +1,22 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var Hero;
+    var Animal;
     return {
         setters:[],
         execute: function() {
-            Hero = (function () {
-                function Hero(id, name, power, alterEgo) {
+            Animal = (function () {
+                function Animal(id, identificador, dtNascimento, power, alterEgo) {
                     this.id = id;
-                    this.name = name;
+                    this.identificador = identificador;
+                    this.dtNascimento = dtNascimento;
                     this.power = power;
                     this.alterEgo = alterEgo;
                 }
-                return Hero;
+                return Animal;
             }());
-            exports_1("Hero", Hero);
+            exports_1("Animal", Animal);
         }
     }
 });
-//# sourceMappingURL=hero.js.map
+//# sourceMappingURL=animais.js.map
