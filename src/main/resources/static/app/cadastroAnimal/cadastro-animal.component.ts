@@ -2,10 +2,9 @@ import {Component} from 'angular2/core';
 import {NgForm}    from 'angular2/common';
 import { Hero }    from './hero';
 @Component({
-  selector: 'hero-form',
-  templateUrl: 'app/cadastroAnimal/hero-form.component.html'
+  templateUrl: 'app/cadastroAnimal/cadastroAnimal.html'
 })
-export class HeroFormComponent {
+export class AnimalFormComponent {
   powers = ['Really Smart', 'Super Flexible',
             'Super Hot', 'Weather Changer'];
   model = new Hero(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');

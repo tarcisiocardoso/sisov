@@ -1,4 +1,4 @@
-System.register(['angular2/core', './cadastroAnimal/hero-form.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './mainMenu/menu.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,27 +10,45 @@ System.register(['angular2/core', './cadastroAnimal/hero-form.component'], funct
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, hero_form_component_1;
+    var core_1, router_1, menu_component_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (hero_form_component_1_1) {
-                hero_form_component_1 = hero_form_component_1_1;
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (menu_component_1_1) {
+                menu_component_1 = menu_component_1_1;
             }],
         execute: function() {
+            //import {MenuComponent} from './mainMenu/menu.component'
+            //@Component({
+            //    selector: 'my-app',
+            //    //template: '<h1>So para ver de qual le</h1>',
+            //    //template: '<hero-form></hero-form>',
+            //    templateUrl: 'app/main.html',
+            //    directives: [HeroFormComponent, MenuComponent]
+            //})
             AppComponent = (function () {
                 function AppComponent() {
                 }
                 AppComponent = __decorate([
                     core_1.Component({
-                        selector: 'my-app',
-                        //template: '<h1>So para ver de qual le</h1>',
-                        template: '<hero-form></hero-form>',
-                        directives: [hero_form_component_1.HeroFormComponent]
-                    }), 
+                        selector: 'app',
+                        template: "\n    <router-outlet></router-outlet>\n  ",
+                        directives: [router_1.ROUTER_DIRECTIVES]
+                    }),
+                    router_1.RouteConfig([
+                        {
+                            path: '/conteudo/...',
+                            name: 'Contudo',
+                            component: menu_component_1.MenuComponent,
+                            useAsDefault: true
+                        }
+                    ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;

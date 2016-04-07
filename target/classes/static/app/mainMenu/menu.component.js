@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './mainMenu/menu.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../cadastroAnimal/cadastro-animal.component', '../conteudo/conteudo.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(['angular2/core', 'angular2/router', './mainMenu/menu.component'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, menu_component_1;
-    var AppComponent;
+    var core_1, router_1, cadastro_animal_component_1, conteudo_component_1;
+    var MenuComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -20,41 +20,33 @@ System.register(['angular2/core', 'angular2/router', './mainMenu/menu.component'
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (menu_component_1_1) {
-                menu_component_1 = menu_component_1_1;
+            function (cadastro_animal_component_1_1) {
+                cadastro_animal_component_1 = cadastro_animal_component_1_1;
+            },
+            function (conteudo_component_1_1) {
+                conteudo_component_1 = conteudo_component_1_1;
             }],
         execute: function() {
-            //import {MenuComponent} from './mainMenu/menu.component'
-            //@Component({
-            //    selector: 'my-app',
-            //    //template: '<h1>So para ver de qual le</h1>',
-            //    //template: '<hero-form></hero-form>',
-            //    templateUrl: 'app/main.html',
-            //    directives: [HeroFormComponent, MenuComponent]
-            //})
-            AppComponent = (function () {
-                function AppComponent() {
+            MenuComponent = (function () {
+                function MenuComponent() {
                 }
-                AppComponent = __decorate([
+                MenuComponent = __decorate([
                     core_1.Component({
-                        selector: 'app',
-                        template: "\n    <router-outlet></router-outlet>\n  ",
+                        selector: 'menu-app',
+                        templateUrl: 'app/mainMenu/menu.html',
+                        //template: '<hero-form></hero-form>',
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }),
                     router_1.RouteConfig([
-                        {
-                            path: '/conteudo/...',
-                            name: 'Contudo',
-                            component: menu_component_1.MenuComponent,
-                            useAsDefault: true
-                        }
+                        { path: '/dashboard', as: 'Dashboard', component: conteudo_component_1.ConteudoComponent, useAsDefault: true },
+                        { path: '/cadastro', as: 'Cadastro', component: cadastro_animal_component_1.AnimalFormComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
-                ], AppComponent);
-                return AppComponent;
+                ], MenuComponent);
+                return MenuComponent;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("MenuComponent", MenuComponent);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=menu.component.js.map

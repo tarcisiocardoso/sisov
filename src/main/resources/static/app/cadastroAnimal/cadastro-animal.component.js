@@ -11,7 +11,7 @@ System.register(['angular2/core', './hero'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, hero_1;
-    var HeroFormComponent;
+    var AnimalFormComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -21,8 +21,8 @@ System.register(['angular2/core', './hero'], function(exports_1, context_1) {
                 hero_1 = hero_1_1;
             }],
         execute: function() {
-            HeroFormComponent = (function () {
-                function HeroFormComponent() {
+            AnimalFormComponent = (function () {
+                function AnimalFormComponent() {
                     this.powers = ['Really Smart', 'Super Flexible',
                         'Super Hot', 'Weather Changer'];
                     this.model = new hero_1.Hero(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
@@ -33,24 +33,23 @@ System.register(['angular2/core', './hero'], function(exports_1, context_1) {
                     // TODO: Workaround until NgForm has a reset method (#6822)
                     this.active = true;
                 }
-                HeroFormComponent.prototype.onSubmit = function () { this.submitted = true; };
-                HeroFormComponent.prototype.newHero = function () {
+                AnimalFormComponent.prototype.onSubmit = function () { this.submitted = true; };
+                AnimalFormComponent.prototype.newHero = function () {
                     var _this = this;
                     this.model = new hero_1.Hero(42, '', '');
                     this.active = false;
                     setTimeout(function () { return _this.active = true; }, 0);
                 };
-                HeroFormComponent = __decorate([
+                AnimalFormComponent = __decorate([
                     core_1.Component({
-                        selector: 'hero-form',
-                        templateUrl: 'app/cadastroAnimal/hero-form.component.html'
+                        templateUrl: 'app/cadastroAnimal/cadastroAnimal.html'
                     }), 
                     __metadata('design:paramtypes', [])
-                ], HeroFormComponent);
-                return HeroFormComponent;
+                ], AnimalFormComponent);
+                return AnimalFormComponent;
             }());
-            exports_1("HeroFormComponent", HeroFormComponent);
+            exports_1("AnimalFormComponent", AnimalFormComponent);
         }
     }
 });
-//# sourceMappingURL=hero-form.component.js.map
+//# sourceMappingURL=cadastro-animal.component.js.map
