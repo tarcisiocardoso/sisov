@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Animal {
 
@@ -16,6 +18,8 @@ public class Animal {
 	private Long id;
 	
 	private String identificador;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dtNascimento;
 	
 	@Column(nullable=true) 
@@ -29,6 +33,9 @@ public class Animal {
 		
 	@Column(nullable=true)
 	private String raca;
+	
+	@Column(nullable=true)
+	private String tipo;
 	
 	private Character sexo;
 
@@ -109,9 +116,20 @@ public class Animal {
 		this.sexo = sexo;
 	}
 
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	@Override
 	public String toString() {
-		return "Animal [id=" + id + ", identificador=" + identificador + "]";
+		return "Animal [id=" + id + ", identificador=" + identificador + ", dtNascimento=" + dtNascimento + ", idPai="
+				+ idPai + ", idMae=" + idMae + ", idFilho=" + idFilho + ", raca=" + raca + ", sexo=" + sexo + "]";
 	}
+
 	
 }

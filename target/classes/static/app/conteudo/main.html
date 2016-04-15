@@ -26,7 +26,13 @@
                 </div>
                 <!-- /.row -->
                 <h1>TODO: colocar dados estatisticos do plantel</h1>
-                
+                <h3>Animais:</h3>
+				  <ul>
+				    <li *ngFor="#animal of animais">
+				      {{ animal.identificador }} - {{ animal.raca }} - {{ animal.sexo }} - {{ animal.pai }} - {{ animal.mae }}
+				    </li>
+				  </ul>
+
 
             </div>
             <!-- /.container-fluid -->

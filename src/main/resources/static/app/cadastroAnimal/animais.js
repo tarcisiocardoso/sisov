@@ -6,12 +6,10 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             Animal = (function () {
-                function Animal(id, identificador, dtNascimento, power, alterEgo) {
+                function Animal(id) {
                     this.id = id;
-                    this.identificador = identificador;
-                    this.dtNascimento = dtNascimento;
-                    this.power = power;
-                    this.alterEgo = alterEgo;
+                    //this.pai = new Animal(0);
+                    //this.mae = new Animal(0);
                 }
                 return Animal;
             }());

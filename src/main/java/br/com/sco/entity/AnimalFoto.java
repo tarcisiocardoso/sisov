@@ -14,6 +14,7 @@ public class AnimalFoto {
 	
 	private Long idAnimal;
 	private Long idFoto;
+	
 	public AnimalFoto(Long idAnimal, Long idFoto) {
 		super();
 		this.idAnimal = idAnimal;

@@ -1,4 +1,4 @@
-System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router', './app.component'], function(exports_1, context_1) {
+System.register(['angular2/platform/browser', 'angular2/core', 'rxjs/Rx', 'angular2/router', './app.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var browser_1, core_1, router_1, app_component_1;
@@ -10,6 +10,7 @@ System.register(['angular2/platform/browser', 'angular2/core', 'angular2/router'
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (_1) {},
             function (router_1_1) {
                 router_1 = router_1_1;
             },

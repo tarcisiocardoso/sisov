@@ -1,4 +1,4 @@
-System.register(['angular2/core', './animais'], function(exports_1, context_1) {
+System.register(['angular2/core', './animais', 'angular2/http', './cadastro-service', '../fuel-ui/fuel-ui', '../datePicker/mydatepicker'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './animais'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, animais_1;
+    var core_1, animais_1, http_1, cadastro_service_1, fuel_ui_1, mydatepicker_1;
     var AnimalFormComponent;
     return {
         setters:[
@@ -19,32 +19,88 @@ System.register(['angular2/core', './animais'], function(exports_1, context_1) {
             },
             function (animais_1_1) {
                 animais_1 = animais_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
+            },
+            function (cadastro_service_1_1) {
+                cadastro_service_1 = cadastro_service_1_1;
+            },
+            function (fuel_ui_1_1) {
+                fuel_ui_1 = fuel_ui_1_1;
+            },
+            function (mydatepicker_1_1) {
+                mydatepicker_1 = mydatepicker_1_1;
             }],
         execute: function() {
             AnimalFormComponent = (function () {
-                function AnimalFormComponent() {
-                    this.powers = ['Really Smart', 'Super Flexible',
-                        'Super Hot', 'Weather Changer'];
-                    this.model = new animais_1.Animal(18, '001', '01/01/2016'); //(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
+                function AnimalFormComponent(_cadastroService) {
+                    this._cadastroService = _cadastroService;
+                    this.racas = ['Dorper', 'Santa Ines', 'Morada Nova', 'RND - Raça não definida', '1/2 D/SI', '1/2 D/MN', '1/2 SI/MO',
+                        '3/4 Dorper', '3/4 Santa Ines', '3/4 Morada Nova'];
+                    this.animal = new animais_1.Animal(0); //(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
                     this.submitted = false;
-                    // Reset the form with a new hero AND restore 'pristine' class state
-                    // by toggling 'active' flag which causes the form
-                    // to be removed/re-added in a tick via NgIf
-                    // TODO: Workaround until NgForm has a reset method (#6822)
                     this.active = true;
+                    this.myDatePickerOptions = {
+                        todayBtnTxt: 'Hoje',
+                        dateFormat: 'dd/mm/yyyy',
+                        firstDayOfWeek: 'mo',
+                        sunHighlight: true
+                    };
+                    this.selectedDate = '20/12/2015';
+                    this.animal.pai = new animais_1.Animal(0);
+                    this.animal.mae = new animais_1.Animal(0);
+                    this.animal.dtNascimento = '01/01/2000';
                 }
-                AnimalFormComponent.prototype.onSubmit = function () { this.submitted = true; };
+                AnimalFormComponent.prototype.onSubmit = function () {
+                    this.submitted = true;
+                    this.addAnimal();
+                };
+                AnimalFormComponent.prototype.addAnimal = function () {
+                    var _this = this;
+                    //if (!name) { return; }
+                    console.log(this.animal);
+                    this._cadastroService.addAnimal(this.animal)
+                        .subscribe(function (animal) { return console.log(animal); }, function (error) { return _this.errorMessage = error; });
+                };
+                AnimalFormComponent.prototype.onDateChanged = function (event) {
+                    console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+                };
+                AnimalFormComponent.prototype.listaReprodutores = function (modal) {
+                    var _this = this;
+                    this._cadastroService.getAllReprodutor()
+                        .subscribe(function (animais) { return _this.reprodutores = animais; }, function (error) { return _this.errorMessage = error; });
+                    modal.showModal();
+                };
+                AnimalFormComponent.prototype.listaMatriz = function (modal) {
+                    var _this = this;
+                    this._cadastroService.getAllMatriz()
+                        .subscribe(function (animais) { return _this.reprodutores = animais; }, function (error) { return _this.errorMessage = error; });
+                    modal.showModal();
+                };
+                AnimalFormComponent.prototype.escolhaReprodutor = function (reprodutor, modal) {
+                    console.log('......');
+                    this.animal.pai = reprodutor;
+                    modal.closeModal();
+                };
+                AnimalFormComponent.prototype.escolhaMatriz = function (matriz, modal) {
+                    console.log('......');
+                    this.animal.mae = matriz;
+                    modal.closeModal();
+                };
                 AnimalFormComponent.prototype.newHero = function () {
                     var _this = this;
-                    this.model = new animais_1.Animal(42, '', '');
+                    this.animal = new animais_1.Animal(0);
                     this.active = false;
                     setTimeout(function () { return _this.active = true; }, 0);
                 };
                 AnimalFormComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/cadastroAnimal/cadastroAnimal.html'
+                        templateUrl: 'app/cadastroAnimal/cadastroAnimal.html',
+                        providers: [http_1.HTTP_PROVIDERS, cadastro_service_1.CadastroService],
+                        directives: [mydatepicker_1.MyDatePicker, fuel_ui_1.Modal]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [cadastro_service_1.CadastroService])
                 ], AnimalFormComponent);
                 return AnimalFormComponent;
             }());
