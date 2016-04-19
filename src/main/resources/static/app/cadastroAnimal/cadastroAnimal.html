@@ -16,7 +16,6 @@
 		                </ol>
 		            </div>
 		        </div>
-		        
                         
 
 <div  [hidden]="submitted">
@@ -52,37 +51,36 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="F">Fêmea
                                 </label>
-                            </div>
-					      <div class="form-group">
-					        <label for="power">Raça</label>
-					        <select class="form-control" required
-					          [(ngModel)]="animal.raca"
-					            ngControl="raca" #raca="ngForm" >
-					          <option *ngFor="#p of racas" [value]="p">{{p}}</option>
-					        </select>
-					        <div [hidden]="raca.valid || raca.pristine" class="alert alert-danger">
-					          Informa a raça
-					        </div>
-					      </div>
-					  
-                    </div>
-                    <div class="col-lg-6">
-                        	<label for="idPai">Identificador Pai</label>
+                          </div>
+                          
+                          
                             <div class="form-group input-group">
-                                <input type="text" class="form-control" [(ngModel)]="animal.pai.id"
-					            ngControl="idPai"  #idPai="ngForm" >
+					            <div class="panel-body">
+					            	Pai: 
+			                    		<strong [hidden]="animal.pai.id == 0">{{animal.pai.identificador}}  - {{animal.pai.raca}} - <img src="/animal/reprodutor/foto/{{animal.pai.id}}" alt="{{animal.pai.raca}}" height="82" width="112"> </strong>
+			                    </div>
                                 <span class="input-group-btn"><button class="btn btn-default" type="button" (click)="listaReprodutores(paiModal)">
                                 <i class="fa fa-search"></i></button></span>
                             </div>
                             
-					        <label for="idMae">Identificador Mae</label>
 					        <div class="form-group input-group">
-                                <input type="text" class="form-control" [(ngModel)]="animal.mae.id"
-					            ngControl="idMae"  #idMae="ngForm" >
+                                <div class="panel-body">
+					            	Mae: 
+			                    		<strong [hidden]="animal.mae.id == 0">{{animal.mae.identificador}}  - {{animal.mae.raca}} - <img src="/animal/reprodutor/foto/{{animal.mae.id}}" alt="{{animal.mae.raca}}" height="82" width="112"> </strong>
+			                    </div>
                                 <span class="input-group-btn"><button class="btn btn-default" type="button" (click)="listaMatriz(maeModal)">
                                 <i class="fa fa-search"></i></button></span>
                             </div>
-                            
+
+ 							<div class="form-group input-group">
+						        <div class="panel-body">
+					            	<b>Raça</b>: 
+			                    		<strong>{{animal.raca}}</strong>
+			                    </div>
+                                <span class="input-group-btn"><button class="btn btn-default" type="button" (click)="listaRaca(racaModal)">
+                                <i class="fa fa-search"></i></button></span>
+					      	</div>
+					                                  
                             <label>Peso</label>
                              <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-hand-o-up"></i></span>
@@ -90,30 +88,34 @@
                                 <span class="input-group-addon">Kg</span>
                             </div>
                             
+                    </div>
+                    <div class="col-lg-6">
+                            
                             <label for="idFoto">Foto</label>
 					        <div class="form-group input-group">
                                 <input type="text" class="form-control" [(ngModel)]="animal.id"
 					            ngControl="idFoto"  #idFoto="ngForm" >
                                 <span class="input-group-btn"><button class="btn btn-default" type="button"><i class="fa fa-search"></i></button></span>
                             </div>
+                            
+                            <div class="row">
+			                    <div class="col-lg-12">
+			                        <div class="panel panel-primary">
+			                            <div class="panel-heading">
+			                                <h3 class="panel-title"><i class="fa fa-file-image-o"></i> Foto</h3>
+			                            </div>
+			                            <div class="panel-body">
+			                                
+			                            </div>
+			                        </div>
+			                    </div>
+		                	</div>
                     </div>
                 </div>
                 <center>
 			      <button type="submit" class="btn btn-default" [disabled]="!heroForm.form.valid">Incluir</button>
 			      <button type="button" class="btn btn-default" (click)="newHero()">Novo cadastro</button>
 		        </center><br>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-file-image-o"></i> Foto</h3>
-                            </div>
-                            <div class="panel-body">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
            </form>     
            </div>
@@ -141,6 +143,25 @@
 
 <!-- /#page-wrapper -->
 </div>
+<modal #racaModal
+    modalTitle="Reprodutor"
+    closeButton="true"
+    closeOnUnfocus="true">
+    <div class="modal-body">
+        <ul>
+            <li *ngFor="#p of racas" [value]="p">
+            	<a href="javascript:void(0)" (click)="escolhaRaca(p, racaModal)" >
+            		<strong> {{p}}</strong>
+            	</a>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="paiModal.closeModal()">
+            <i class="fa fa-chevron-left"></i> Go Back
+        </button>
+    </div>
+</modal>
 <modal #paiModal
     modalTitle="Reprodutor"
     closeButton="true"
