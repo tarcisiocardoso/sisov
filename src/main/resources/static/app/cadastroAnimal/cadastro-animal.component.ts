@@ -15,6 +15,7 @@ import {MyDatePicker} from '../datePicker/mydatepicker';
 })
 export class AnimalFormComponent {
 
+    filesToUpload: Array<File>;
     reprodutores: Animal[];
     errorMessage: string;
     private RND = 3;
@@ -29,10 +30,64 @@ export class AnimalFormComponent {
     constructor(private _cadastroService: CadastroService) { 
         this.animal.pai = new Animal(0);
         this.animal.mae = new Animal(0);  
+        this.filesToUpload = [];
         
         let dt = new Date().toLocaleDateString();
 
         this.animal.dtNascimento = dt;
+    }
+    
+    upload() {
+        console.log( '....upload....');
+        this.makeFileRequest("/upload", [], this.filesToUpload).then((result) => {
+            console.log(result);
+        }, (error) => {
+            console.error(error);
+        });
+    }
+    fileChangeEvent(fileInput: any){
+        console.log('...fileChangeEvent...');
+        this.filesToUpload = <Array<File>> fileInput.target.files;
+    }
+ 
+    makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
+        console.log('...makeFileRequest...');
+        return new Promise((resolve, reject) => {
+            var formData: any = new FormData();
+            
+//            if (!XMLHttpRequest.prototype.sendAsBinary) {
+//                  XMLHttpRequest.prototype.sendAsBinary = function (sData) {
+//                    var nBytes = sData.length, ui8Data = new Uint8Array(nBytes);
+//                    for (var nIdx = 0; nIdx < nBytes; nIdx++) {
+//                      ui8Data[nIdx] = sData.charCodeAt(nIdx) & 0xff;
+//                    }
+//                    /* send as ArrayBufferView...: */
+//                    this.send(ui8Data);
+//                    /* ...or as ArrayBuffer (legacy)...: this.send(ui8Data.buffer); */
+//                };
+//             }
+                                
+            var xhr = new XMLHttpRequest();
+            
+            for(var i = 0; i < files.length; i++) {
+                formData.append("file", files[i], files[i].name);
+            }
+            xhr.onreadystatechange = function () {
+                console.log('....onreadystatechange....');
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(xhr.response);
+                    }
+                }
+            }
+            xhr.open("POST", url, true);
+            //var sBoundary = "---------------------------" + Date.now().toString(16);
+            //xhr.setRequestHeader("Content-Type", "multipart\/form-data; boundary=" + sBoundary+"; file='xoxota'");
+            xhr.send(formData);
+            
+        });
     }
     
     onSubmit() {

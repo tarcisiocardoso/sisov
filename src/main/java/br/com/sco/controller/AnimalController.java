@@ -1,8 +1,10 @@
 package br.com.sco.controller;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.sco.SistemaControleOvinoApplication;
 import br.com.sco.entity.Animal;
 import br.com.sco.entity.AnimalFoto;
 import br.com.sco.entity.Cruzamento;
@@ -73,6 +76,17 @@ public class AnimalController {
 	@RequestMapping(value="/animal/matriz")
 	Collection<Animal> matriz(){
 		return this.animalRepository.findByTipo("Matriz");
+	}
+	
+	@RequestMapping(value = "/foto/{nome}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] foto( @PathVariable("nome") String nome ) throws IOException {
+		
+		String foto = SistemaControleOvinoApplication.ROOT + "/" +nome+".jpg";
+		
+		File file = new File(foto);
+		InputStream in = new BufferedInputStream(new FileInputStream(file));
+		
+		return IOUtils.toByteArray(in);
 	}
 	
 	@RequestMapping(value = "/animal/reprodutor/foto/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)

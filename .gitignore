@@ -2,6 +2,9 @@ src/main/resources/static/app/*.js
 src/main/resources/static/app/*.map
 target/
 /build
+/upload-dir
+upload-dir/
+
 
 # Eclipse artifacts, including WTP generated manifests
 .classpath
@@ -11,3 +14,4 @@ spring-*/src/main/java/META-INF/MANIFEST.MF
 *.map
 
 *.log
+
