@@ -13,16 +13,16 @@ public class Filho {
 	private Long id;
 
 	private Long idFilho;
-	private Long idAnimal;
+	private Long idPai;
 
 	
 	public Filho() {
 		super();
 	}
 
-	public Filho(Long idFilho, Long idAnimal) {
+	public Filho(Long idFilho, Long idPai) {
 		super();
-		this.idAnimal = idAnimal;
+		this.idPai = idPai;
 		this.idFilho = idFilho;
 	}
 
@@ -35,19 +35,19 @@ public class Filho {
 	}
 
 	public Long getIdAnimal() {
-		return idAnimal;
+		return idPai;
 	}
 
 	public void setIdAnimal(Long idAnimal) {
-		this.idAnimal = idAnimal;
+		this.idPai = idAnimal;
 	}
 
-	public Long getIdFilho() {
+	public Long getIdPai() {
 		return idFilho;
 	}
 
-	public void setIdFilho(Long idFilho) {
-		this.idFilho = idFilho;
+	public void setIdPai(Long idPai) {
+		this.idFilho = idPai;
 	}
 	
 }

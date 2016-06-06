@@ -29,7 +29,8 @@
                 <h3>Animais:</h3>
 				  <ul>
 				    <li *ngFor="#animal of animais">
-				      {{ animal.identificador }} - {{ animal.raca }} - {{ animal.sexo }} - {{ animal.pai }} - {{ animal.mae }}
+				      {{ animal.identificador }} - {{ animal.raca }} 
+				      <img src="/animal/reprodutor/foto/{{animal.id}}" alt="foto" height="82" width="112"/>
 				    </li>
 				  </ul>
 

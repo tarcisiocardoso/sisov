@@ -18,6 +18,7 @@ public class Peso {
 	
 	private Date dtMedicao;
 	private Float valor;
+	
 	public Peso(Long idAnimal, Date dtMedicao, Float valor) {
 		super();
 		this.idAnimal = idAnimal;

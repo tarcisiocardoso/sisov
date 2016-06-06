@@ -2,6 +2,7 @@ import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, Router} from 'angular2/router'
 import {AnimalFormComponent} from '../cadastroAnimal/cadastro-animal.component'
 import {ConteudoComponent} from '../conteudo/conteudo.component'
+import {CoberturaFormComponent} from '../cobertura/cobertura.component'
 
 @Component({
     selector: 'menu-app',
@@ -12,6 +13,7 @@ import {ConteudoComponent} from '../conteudo/conteudo.component'
     
 @RouteConfig([
   { path: '/dashboard', as: 'Dashboard', component: ConteudoComponent, useAsDefault: true },
-  { path: '/cadastro', as: 'Cadastro', component: AnimalFormComponent }
+  { path: '/cadastro', as: 'Cadastro', component: AnimalFormComponent },
+  { path: '/cobertura', as: 'Cobertura', component: CoberturaFormComponent},
 ])
 export class MenuComponent { }

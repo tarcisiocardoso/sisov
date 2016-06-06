@@ -9,6 +9,7 @@ export class Animal {
     public raca: string;
     public sexo: string;
     public foto: string;
+    public peso: string;
     
     public alterEgo: string;
     

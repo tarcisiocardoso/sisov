@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.Collection;
 
 import javax.servlet.ServletContext;
@@ -26,14 +27,16 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.sco.SistemaControleOvinoApplication;
 import br.com.sco.entity.Animal;
 import br.com.sco.entity.AnimalFoto;
-import br.com.sco.entity.Cruzamento;
+import br.com.sco.entity.Cobertura;
 import br.com.sco.entity.Filho;
+import br.com.sco.entity.Foto;
 import br.com.sco.entity.Peso;
 import br.com.sco.entity.Reproducao;
 import br.com.sco.repository.AnimalFotoRepository;
 import br.com.sco.repository.AnimalRepository;
 import br.com.sco.repository.CruzamentoRepository;
 import br.com.sco.repository.FilhoRepository;
+import br.com.sco.repository.FotoRepository;
 import br.com.sco.repository.PesoRepository;
 import br.com.sco.repository.ReproducaoRepository;
 
@@ -62,6 +65,16 @@ public class AnimalController {
 	
 	@Autowired
 	AnimalFotoRepository animalFotoRepository;
+	
+	@Autowired
+	FotoRepository fotoRepository;
+	
+	@RequestMapping(value="/peso/{idAnimal}")
+	public String getPesoAniaml(@PathVariable("idAnimal") Long idAnimal){
+		String peso = "";
+		peso = this.pesoRepository.getPeso(idAnimal);
+		return peso;
+	}
 	
 	@RequestMapping(value="/animal")
 	Collection<Animal> animais(){
@@ -101,17 +114,38 @@ public class AnimalController {
 		InputStream in = new BufferedInputStream(new FileInputStream(file));
 
 		return IOUtils.toByteArray(in);
-
 	}
 	
 	@RequestMapping(value="/animal", method=RequestMethod.POST)
 	String animalSubmit(@RequestBody Animal animal, Model model){
 		System.out.println( animal );
-		this.animalRepository.save(animal);
+		Animal animalSalvo = this.animalRepository.save(animal);
 		this.animalRepository.flush();
-		
-		//return this.animalRepository.findAll();
-		return "{\"sucesso\": \"ok\", \"id\": "+animal.getId()+"}";
+		if( animal.getFoto() != null ){
+			//TODO mover imagem
+			File f = new File(SistemaControleOvinoApplication.ROOT+"/"+animal.getFoto());
+			if( f.isFile() ){
+				f.renameTo( new File( PATH_IMAGE +"/"+animal.getFoto() )  );
+			}
+			Foto foto = new Foto();
+			foto.setPathImagem( animal.getFoto() );
+			foto.setDtInsert( new Date(System.currentTimeMillis()) );
+			//TODO concluir savar foto
+			this.fotoRepository.save(foto);
+			
+			AnimalFoto animalFoto = new AnimalFoto();
+			animalFoto.setIdAnimal( animalSalvo.getId() );
+			animalFoto.setIdFoto( foto.getId() );
+			this.animalFotoRepository.save(animalFoto );
+		}
+		if( animal.getPeso() != null){
+			Peso peso = new Peso();
+			peso.setIdAnimal( animalSalvo.getId() );
+			peso.setValor( animal.getPeso() );
+			this.pesoRepository.save(peso );
+			this.pesoRepository.flush();
+		}
+		return "{\"sucesso\": \"ok\", \"id\": "+animalSalvo.getId()+"}";
 	}
 	
 	@RequestMapping("/filhos")
@@ -125,7 +159,7 @@ public class AnimalController {
 	}
 	
 	@RequestMapping("/cruza")
-	Collection<Cruzamento> cruzas(){
+	Collection<Cobertura> cruzas(){
 		return this.cruzamentoRepository.findAll();
 	}
 	

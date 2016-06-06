@@ -42,6 +42,7 @@ System.register(['angular2/core', './animais', 'angular2/http', './cadastro-serv
                         '3/4 Dorper', '3/4 Santa Ines', '3/4 Morada Nova'];
                     this.animal = new animais_1.Animal(0); //(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
                     this.submitted = false;
+                    this.escondeFoto = true;
                     this.active = true;
                     this.myDatePickerOptions = {
                         todayBtnTxt: 'Hoje',
@@ -56,33 +57,45 @@ System.register(['angular2/core', './animais', 'angular2/http', './cadastro-serv
                     var dt = new Date().toLocaleDateString();
                     this.animal.dtNascimento = dt;
                 }
+                AnimalFormComponent.prototype.ngAfterViewInit = function () {
+                    console.log(this.inputFoto.nativeElement);
+                };
                 AnimalFormComponent.prototype.upload = function () {
                     console.log('....upload....');
-                    this.makeFileRequest("/upload", [], this.filesToUpload).then(function (result) {
-                        console.log(result);
-                    }, function (error) {
-                        console.error(error);
-                    });
+                    var me = this;
+                    if (this.filesToUpload.length > 0) {
+                        this.makeFileRequest("/upload", [], this.filesToUpload).then(function (result) {
+                            console.log('-->sucesso:' + result);
+                            me.addAnimal(result['foto']);
+                        }, function (error) {
+                            console.error('-->error: ' + error);
+                        });
+                    }
+                    else {
+                        me.addAnimal(null);
+                    }
+                };
+                AnimalFormComponent.prototype.novoCadastro = function () {
+                    this.animal = new animais_1.Animal(0);
+                    this.submitted = false;
                 };
                 AnimalFormComponent.prototype.fileChangeEvent = function (fileInput) {
                     console.log('...fileChangeEvent...');
                     this.filesToUpload = fileInput.target.files;
+                    var reader = new FileReader();
+                    var foto = this.inputFoto.nativeElement;
+                    var me = this;
+                    reader.onload = function () {
+                        //$('#blah').attr('src', e.target.result);
+                        foto.src = reader.result;
+                        me.escondeFoto = false;
+                    };
+                    reader.readAsDataURL(this.filesToUpload[0]);
                 };
                 AnimalFormComponent.prototype.makeFileRequest = function (url, params, files) {
                     console.log('...makeFileRequest...');
                     return new Promise(function (resolve, reject) {
                         var formData = new FormData();
-                        //            if (!XMLHttpRequest.prototype.sendAsBinary) {
-                        //                  XMLHttpRequest.prototype.sendAsBinary = function (sData) {
-                        //                    var nBytes = sData.length, ui8Data = new Uint8Array(nBytes);
-                        //                    for (var nIdx = 0; nIdx < nBytes; nIdx++) {
-                        //                      ui8Data[nIdx] = sData.charCodeAt(nIdx) & 0xff;
-                        //                    }
-                        //                    /* send as ArrayBufferView...: */
-                        //                    this.send(ui8Data);
-                        //                    /* ...or as ArrayBuffer (legacy)...: this.send(ui8Data.buffer); */
-                        //                };
-                        //             }
                         var xhr = new XMLHttpRequest();
                         for (var i = 0; i < files.length; i++) {
                             formData.append("file", files[i], files[i].name);
@@ -90,6 +103,8 @@ System.register(['angular2/core', './animais', 'angular2/http', './cadastro-serv
                         xhr.onreadystatechange = function () {
                             console.log('....onreadystatechange....');
                             if (xhr.readyState == 4) {
+                                console.log('xhr.status: ' + xhr.status);
+                                console.log('xhr.response: ' + xhr.response);
                                 if (xhr.status == 200) {
                                     resolve(JSON.parse(xhr.response));
                                 }
@@ -105,15 +120,18 @@ System.register(['angular2/core', './animais', 'angular2/http', './cadastro-serv
                     });
                 };
                 AnimalFormComponent.prototype.onSubmit = function () {
-                    this.submitted = true;
-                    this.addAnimal();
+                    this.upload();
                 };
-                AnimalFormComponent.prototype.addAnimal = function () {
+                AnimalFormComponent.prototype.addAnimal = function (foto) {
                     var _this = this;
-                    //if (!name) { return; }
+                    this.animal.foto = foto;
                     console.log(this.animal);
                     this._cadastroService.addAnimal(this.animal)
-                        .subscribe(function (animal) { return console.log(animal); }, function (error) { return _this.errorMessage = error; });
+                        .subscribe(function (animal) { return _this.cadastroOk(animal); }, function (error) { return _this.errorMessage = error; });
+                };
+                AnimalFormComponent.prototype.cadastroOk = function (animal) {
+                    console.log(animal);
+                    this.submitted = true;
                 };
                 AnimalFormComponent.prototype.onDateChanged = function (event) {
                     console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
@@ -302,6 +320,10 @@ System.register(['angular2/core', './animais', 'angular2/http', './cadastro-serv
                     };
                     return retorno;
                 };
+                __decorate([
+                    core_1.ViewChild('foto'), 
+                    __metadata('design:type', core_1.ElementRef)
+                ], AnimalFormComponent.prototype, "inputFoto", void 0);
                 AnimalFormComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/cadastroAnimal/cadastroAnimal.html',

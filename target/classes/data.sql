@@ -1,25 +1,19 @@
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('001', current_date(), 1, 'Dorper', 'M', 'Reprodutor' );
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('001a', current_date(), 1, '1/2 Dorper/Santa Ines', 'M', 'Reprodutor' );
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('001b', current_date(), 1, '3/4 Santa Ines', 'M', 'Reprodutor' );
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('001c', current_date(), 1, '3/4 Dorper', 'M', 'Reprodutor' );
+insert into animal( identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('001', '2014-11-01', 1, 'Dorper', 'M', 'Reprodutor' );
 
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('002', current_date(), 1, 'Santa Ines', 'F', 'Matriz' );
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('002a', current_date(), 1, 'Dorper', 'F', 'Matriz' );
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('002b', current_date(), 1, '1/2 Dorper/Santa Ines', 'F', 'Matriz' );
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('002c', current_date(), 1, '3/4 Santa Ines', 'F', 'Matriz' );
+insert into animal( identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('002', '2013-11-01', 1, 'Santa Ines', 'F', 'Matriz' );
 
-insert into animal(identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('003', current_date(), 2, 'RND', 'F', 'Matriz' );
-insert into animal(identificador, dt_nascimento, id_pai, id_mae, raca, sexo) values ('004', current_date(), 1, 2, '1/2 Dorper', 'F' );
-insert into animal(identificador, dt_nascimento, id_pai, id_mae, raca, sexo) values ('005', current_date(), 1, 2,  'RND', 'M' );
-insert into animal(identificador, dt_nascimento, id_pai, id_mae, raca, sexo) values ('006', current_date(), 1, 2,  'RND', 'F' );
+insert into animal( identificador, dt_nascimento, id_filho, raca, sexo, tipo) values ('003', '2015-11-01', 2, 'RND', 'F', 'Matriz' );
+insert into animal( identificador, dt_nascimento, id_pai, id_mae, raca, sexo) values ('004', '2015-11-01', 1, 2, '1/2 Dorper', 'F' );
+insert into animal( identificador, dt_nascimento, id_pai, id_mae, raca, sexo) values ('005', '2015-11-01', 1, 2,  'RND', 'M' );
+insert into animal( identificador, dt_nascimento, id_pai, id_mae, raca, sexo) values ('006', '2015-11-01', 1, 2,  'RND', 'F' );
 
-insert into filho (id_filho, id_animal) values( 1, 3);
-insert into filho (id_filho, id_animal) values( 1, 4);
-insert into filho (id_filho, id_animal) values( 1, 4);
+insert into filho (id_filho, id_pai) values( 3, 1);
+insert into filho (id_filho, id_pai) values( 4, 1);
+insert into filho (id_filho, id_pai) values( 4, 2);
 
 insert into reproducao (id_mae, id_filho, id_procedimento, descricao) values (2, 1, 1, 'Tudo normal');
 
-insert into cruzamento (id_macho, id_femea, id_peso, dt_cobertura) values (1, 2, 1, current_date() );
+insert into cobertura (id_macho, id_femea, id_peso, dt_cobertura) values (1, 2, 1, '2015-01-01' );
 
 insert into peso (id_animal, dt_medicao, valor) values (1, '2015-01-01', 4);
 insert into peso (id_animal, dt_medicao, valor) values (1, '2015-02-01', 14);

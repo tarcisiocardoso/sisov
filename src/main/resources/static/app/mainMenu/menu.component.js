@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../cadastroAnimal/cadastro-animal.component', '../conteudo/conteudo.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../cadastroAnimal/cadastro-animal.component', '../conteudo/conteudo.component', '../cobertura/cobertura.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../cadastroAnimal/cadastro
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, cadastro_animal_component_1, conteudo_component_1;
+    var core_1, router_1, cadastro_animal_component_1, conteudo_component_1, cobertura_component_1;
     var MenuComponent;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(['angular2/core', 'angular2/router', '../cadastroAnimal/cadastro
             },
             function (conteudo_component_1_1) {
                 conteudo_component_1 = conteudo_component_1_1;
+            },
+            function (cobertura_component_1_1) {
+                cobertura_component_1 = cobertura_component_1_1;
             }],
         execute: function() {
             MenuComponent = (function () {
@@ -39,7 +42,8 @@ System.register(['angular2/core', 'angular2/router', '../cadastroAnimal/cadastro
                     }),
                     router_1.RouteConfig([
                         { path: '/dashboard', as: 'Dashboard', component: conteudo_component_1.ConteudoComponent, useAsDefault: true },
-                        { path: '/cadastro', as: 'Cadastro', component: cadastro_animal_component_1.AnimalFormComponent }
+                        { path: '/cadastro', as: 'Cadastro', component: cadastro_animal_component_1.AnimalFormComponent },
+                        { path: '/cobertura', as: 'Cobertura', component: cobertura_component_1.CoberturaFormComponent },
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], MenuComponent);

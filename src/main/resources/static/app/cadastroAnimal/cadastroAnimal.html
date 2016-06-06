@@ -84,7 +84,9 @@
                             <label>Peso</label>
                              <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-hand-o-up"></i></span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" [(ngModel)]="animal.peso"
+					            	ngControl="peso"  #peso="ngForm" >
+                                
                                 <span class="input-group-addon">Kg</span>
                             </div>
                             
@@ -109,7 +111,9 @@
 			                                <h3 class="panel-title"><i class="fa fa-file-image-o"></i> Foto</h3>
 			                            </div>
 			                            <div class="panel-body">
-			                                
+			                              	<div [hidden]="escondeFoto" >
+			                                	<img #foto src="#" alt="Foto do borrego" class="media-object"  />
+			                                </div>	
 			                            </div>
 			                        </div>
 			                    </div>
@@ -124,21 +128,31 @@
            </form>     
            </div>
                 <div [hidden]="!submitted">
-					    <h2>You submitted the following:</h2>
+					    <h2>Resgistro incluido com sucesso</h2>
 					    <div class="row">
-					      <div class="col-xs-3">Name</div>
-					      <div class="col-xs-9  pull-left">{{ animal.name }}</div>
+					      <div class="col-xs-3">Identificador</div>
+					      <div class="col-xs-9  pull-left">{{ animal.identificador }}</div>
 					    </div>
 					    <div class="row">
-					      <div class="col-xs-3">Alter Ego</div>
-					      <div class="col-xs-9 pull-left">{{ animal.alterEgo }}</div>
+					    	<div class="col-xs-3">Pai</div>
+					    	<div class="col-xs-9 pull-left">
+					      		<strong [hidden]="animal.pai.id == 0">{{animal.pai.identificador}}  - {{animal.pai.raca}} - <img src="/animal/reprodutor/foto/{{animal.pai.id}}" alt="{{animal.pai.raca}}" height="82" width="112"> </strong>
+					      	</div>
 					    </div>
 					    <div class="row">
-					      <div class="col-xs-3">Power</div>
-					      <div class="col-xs-9 pull-left">{{ animal.power }}</div>
+					      	<div class="col-xs-3">Mae:</div>
+					      	<div class="col-xs-9 pull-left">
+			                    <strong [hidden]="animal.mae.id == 0">{{animal.mae.identificador}}  - {{animal.mae.raca}} - <img src="/animal/reprodutor/foto/{{animal.mae.id}}" alt="{{animal.mae.raca}}" height="82" width="112"> </strong>
+							</div>
+					    </div>
+					    <div class="row">
+					      	<div class="col-xs-3">Animal</div>
+					      	<div class="col-xs-9 pull-left">
+			                    <strong [hidden]="animal.foto == null"><img src="/animal/reprodutor/foto/{{animal.id}}" alt="{{animal.raca}}" height="82" width="112"> </strong>
+							</div>
 					    </div>
 					    <br>
-					    <button class="btn btn-default" (click)="submitted=false">Edit</button>
+					    <button class="btn btn-default" (click)="novoCadastro()">Novo cadastro</button>
 					  </div>
                 <!-- /.row -->
             </div>

@@ -1,13 +1,12 @@
 package br.com.sco.entity;
 
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -38,6 +37,28 @@ public class Animal {
 	private String tipo;
 	
 	private Character sexo;
+	
+	@Transient
+	private String foto;
+	
+	@Transient
+	private Float peso;
+	
+	public Float getPeso() {
+		return peso;
+	}
+
+	public void setPeso(Float peso) {
+		this.peso = peso;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	public Animal(String identificador) {
 		super();

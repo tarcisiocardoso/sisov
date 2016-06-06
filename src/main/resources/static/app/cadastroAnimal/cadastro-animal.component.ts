@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, ViewChild, ElementRef} from 'angular2/core';
 import {NgForm}    from 'angular2/common';
 import {Animal}    from './animais';
 import {HTTP_PROVIDERS}    from 'angular2/http';
@@ -19,6 +19,8 @@ export class AnimalFormComponent {
     reprodutores: Animal[];
     errorMessage: string;
     private RND = 3;
+    
+    @ViewChild('foto') inputFoto: ElementRef; 
 
     racas = ['Dorper', 'Santa Ines', 'Morada Nova', 'RND - Raça não definida', 
              '1/2 Dorder/Santa Ines', '1/2 Dorper/Morada Nova', '1/2 Santa Ines/Morada Nova', '1/2 Dorper/RND', '1/2 Santa Ines/RND', '1/2 Morada Nova/RND',
@@ -26,6 +28,7 @@ export class AnimalFormComponent {
     animal: Animal = new Animal(0); //(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
     
     submitted = false;
+    escondeFoto = true;
     
     constructor(private _cadastroService: CadastroService) { 
         this.animal.pai = new Animal(0);
@@ -36,36 +39,49 @@ export class AnimalFormComponent {
 
         this.animal.dtNascimento = dt;
     }
-    
+    ngAfterViewInit() {
+        console.log(this.inputFoto.nativeElement);
+    }
     upload() {
         console.log( '....upload....');
-        this.makeFileRequest("/upload", [], this.filesToUpload).then((result) => {
-            console.log(result);
-        }, (error) => {
-            console.error(error);
-        });
+        let me = this;
+        if( this.filesToUpload.length > 0 ){
+            this.makeFileRequest("/upload", [], this.filesToUpload).then((result) => {
+                console.log('-->sucesso:' + result);
+                me.addAnimal( result['foto'] );
+                
+            }, (error) => {
+                console.error('-->error: '+error);
+            });
+        }else{
+            me.addAnimal( null );
+        }
     }
+    novoCadastro(){
+        this.animal = new Animal(0);
+        this.submitted=false;
+    }
+    
     fileChangeEvent(fileInput: any){
         console.log('...fileChangeEvent...');
         this.filesToUpload = <Array<File>> fileInput.target.files;
+        
+        let reader = new FileReader();
+        let foto = this.inputFoto.nativeElement;
+        let me = this; 
+
+        reader.onload = function () {
+            //$('#blah').attr('src', e.target.result);
+            foto.src = reader.result;
+            me.escondeFoto = false;
+        }
+        reader.readAsDataURL(this.filesToUpload[0]);
     }
- 
+
     makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
         console.log('...makeFileRequest...');
         return new Promise((resolve, reject) => {
-            var formData: any = new FormData();
-            
-//            if (!XMLHttpRequest.prototype.sendAsBinary) {
-//                  XMLHttpRequest.prototype.sendAsBinary = function (sData) {
-//                    var nBytes = sData.length, ui8Data = new Uint8Array(nBytes);
-//                    for (var nIdx = 0; nIdx < nBytes; nIdx++) {
-//                      ui8Data[nIdx] = sData.charCodeAt(nIdx) & 0xff;
-//                    }
-//                    /* send as ArrayBufferView...: */
-//                    this.send(ui8Data);
-//                    /* ...or as ArrayBuffer (legacy)...: this.send(ui8Data.buffer); */
-//                };
-//             }
+            let formData: any = new FormData();
                                 
             var xhr = new XMLHttpRequest();
             
@@ -75,6 +91,8 @@ export class AnimalFormComponent {
             xhr.onreadystatechange = function () {
                 console.log('....onreadystatechange....');
                 if (xhr.readyState == 4) {
+                    console.log('xhr.status: '+xhr.status );
+                    console.log('xhr.response: '+xhr.response);
                     if (xhr.status == 200) {
                         resolve(JSON.parse(xhr.response));
                     } else {
@@ -91,17 +109,23 @@ export class AnimalFormComponent {
     }
     
     onSubmit() {
-        this.submitted = true;
-        this.addAnimal();
+        this.upload();
     }
 
-    addAnimal() {
-        //if (!name) { return; }
+    addAnimal(foto: string) {
+        this.animal.foto = foto;
         console.log( this.animal );
         this._cadastroService.addAnimal( this.animal )
             .subscribe(
-            animal => console.log(animal),
+            animal => this.cadastroOk(animal),
             error => this.errorMessage = <any>error);
+    }
+    private cadastroOk(animal: Animal){
+        
+        console.log( animal );
+        
+        this.submitted = true;
+                    
     }
 
     active = true;

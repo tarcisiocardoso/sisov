@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Cruzamento {
+public class Cobertura {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -17,19 +17,27 @@ public class Cruzamento {
 	private Long idMacho;
 	private Long idFemea;
 	
+	private Date dtCobertura;
+	
 	private Long idPeso;
 	
-	private Date dtCobertura;
 
-	public Cruzamento(Long idMacho, Long idFemea, Long idPeso, Date dtCobertura) {
+	public Long getIdPeso() {
+		return idPeso;
+	}
+
+	public void setIdPeso(Long idPeso) {
+		this.idPeso = idPeso;
+	}
+
+	public Cobertura(Long idMacho, Long idFemea, Long idPeso, Date dtCobertura) {
 		super();
 		this.idMacho = idMacho;
 		this.idFemea = idFemea;
-		this.idPeso = idPeso;
 		this.dtCobertura = dtCobertura;
 	}
 
-	public Cruzamento() {
+	public Cobertura() {
 		super();
 	}
 
@@ -57,14 +65,6 @@ public class Cruzamento {
 		this.idFemea = idFemea;
 	}
 
-	public Long getIdPeso() {
-		return idPeso;
-	}
-
-	public void setIdPeso(Long idPeso) {
-		this.idPeso = idPeso;
-	}
-
 	public Date getDtCobertura() {
 		return dtCobertura;
 	}
@@ -75,7 +75,7 @@ public class Cruzamento {
 
 	@Override
 	public String toString() {
-		return "Cruzamento [id=" + id + ", idMacho=" + idMacho + ", idFemea=" + idFemea + ", idPeso=" + idPeso
+		return "Cruzamento [id=" + id + ", idMacho=" + idMacho + ", idFemea=" + idFemea
 				+ ", dtCobertura=" + dtCobertura + "]";
 	}
 	

@@ -51,29 +51,24 @@ public class FileUploadController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/upload")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-								   RedirectAttributes redirectAttributes) {
+	@ResponseBody
+	public String handleFileUpload(@RequestParam("file") MultipartFile file) {
 
-		String name = System.currentTimeMillis() + ".jpg";
+		String nome = null;
 		if (!file.isEmpty()) {
 			//String name = file.getName();
+			nome = System.currentTimeMillis() + ".jpg";
 			try {
 				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(new File(SistemaControleOvinoApplication.ROOT + "/" + name)));
+						new FileOutputStream(new File(SistemaControleOvinoApplication.ROOT + "/" + nome)));
                 FileCopyUtils.copy(file.getInputStream(), stream);
 				stream.close();
-				redirectAttributes.addFlashAttribute("message",
-						"You successfully uploaded " + name + "!");
+				
 			}
 			catch (Exception e) {
-				redirectAttributes.addFlashAttribute("message",
-						"You failed to upload " + name + " => " + e.getMessage());
+				return "{ \"sucess\": false, \"erro\": \""+e.getMessage()+"\" }";
 			}
 		}
-		else {
-			redirectAttributes.addFlashAttribute("message",
-					"Upload esta vazio");
-		}
-		return "redirect:foto/"+name;
+		return "{ \"sucess\": true, \"foto\": \""+nome+"\" }";
 	}
 }
