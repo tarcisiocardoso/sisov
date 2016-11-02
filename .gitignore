@@ -4,7 +4,7 @@ target/
 /build
 /upload-dir
 upload-dir/
-
+src/main/resources/static/node_modules
 
 # Eclipse artifacts, including WTP generated manifests
 .classpath
