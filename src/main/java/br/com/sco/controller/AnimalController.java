@@ -1,27 +1,27 @@
 package br.com.sco.controller;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sco.SistemaControleOvinoApplication;
@@ -39,6 +39,7 @@ import br.com.sco.repository.FilhoRepository;
 import br.com.sco.repository.FotoRepository;
 import br.com.sco.repository.PesoRepository;
 import br.com.sco.repository.ReproducaoRepository;
+import br.com.sco.repository.dao.AnimalDao;
 
 @RestController
 public class AnimalController {
@@ -66,20 +67,57 @@ public class AnimalController {
 	@Autowired
 	AnimalFotoRepository animalFotoRepository;
 	
+	//@Autowired
+	//TesteJDBC jdbc;
+	@Autowired
+	DataSource dataSource;
+	
 	@Autowired
 	FotoRepository fotoRepository;
 	
-	@RequestMapping(value="/peso/{idAnimal}")
-	public String getPesoAniaml(@PathVariable("idAnimal") Long idAnimal){
+	@Autowired
+	AnimalDao jdbc;
+	
+	@RequestMapping(value="/pesoMax/{idAnimal}")
+	public String getPesoMaxAniaml(@PathVariable("idAnimal") Long idAnimal){
 		String peso = "";
 		peso = this.pesoRepository.getPeso(idAnimal);
 		return peso;
 	}
+	@RequestMapping(value="/peso/{idAnimal}")
+	public Collection<Peso> getPesoAniaml(@PathVariable("idAnimal") Long idAnimal){
+		return this.pesoRepository.getPesoDoAnimal(idAnimal);
+	}
 	
 	@RequestMapping(value="/animal")
 	Collection<Animal> animais(){
-		return this.animalRepository.findAll();
+//		return this.animalRepository.findAll();
+		
+//		Collection<Object[]> c = this.animalRepository.findTodos();
+//		Collection<Animal> aLst = new ArrayList<Animal>(c.size());
+//		for (Object []item : c) {
+//			Animal a = new Animal();
+//			a.setId( ((BigInteger)item[0]).longValue() );
+//			a.setFoto( (String)item[9] );
+//			System.out.println(a);
+//			aLst.add(a);
+//		}
+//		return aLst;
+//		return jdbc.todos();
+		
+		return jdbc.todos();
+		
+//		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+//		
+//		jdbcTemplate.query(
+//                "SELECT *, 'xxx' as foto FROM animal",
+//                (rs, rowNum) -> make(rs)
+//        ).forEach(a -> System.out.println(a.toString()));
+//		
+//		return null;
 	}
+	
+	
 	
 	@RequestMapping(value="/animal/reprodutor")
 	Collection<Animal> reprodutor(){
@@ -115,8 +153,27 @@ public class AnimalController {
 
 		return IOUtils.toByteArray(in);
 	}
+
+	@RequestMapping(value="/foto", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+	String addFoto(@RequestBody Foto foto, Model model){
+		System.out.println( foto );
+		
+		Foto fotoSalvo = this.fotoRepository.save(foto);
+		this.fotoRepository.flush();
+
+		return "{\"sucesso\": \"ok\", \"id\": "+fotoSalvo.getId()+"}";
+	}
+	@RequestMapping(value="/peso", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+	String addPeso(@RequestBody Peso peso, Model model){
+		System.out.println( peso );
+		
+		Peso pesoSalvo = this.pesoRepository.save(peso);
+		this.pesoRepository.flush();
+
+		return "{\"sucesso\": \"ok\", \"id\": "+pesoSalvo.getId()+"}";
+	}
 	
-	@RequestMapping(value="/animal", method=RequestMethod.POST)
+	@RequestMapping(value="/animal", method = RequestMethod.POST, headers = {"Content-type=application/json"})
 	String animalSubmit(@RequestBody Animal animal, Model model){
 		System.out.println( animal );
 		Animal animalSalvo = this.animalRepository.save(animal);
@@ -167,4 +224,5 @@ public class AnimalController {
 	Collection<Peso> peso(){
 		return this.pesoRepository.findAll();
 	}
+	
 }

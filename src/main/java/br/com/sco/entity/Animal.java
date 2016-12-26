@@ -18,7 +18,7 @@ public class Animal {
 	
 	private String identificador;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dtNascimento;
 	
 	@Column(nullable=true) 
@@ -28,9 +28,6 @@ public class Animal {
 	private Long idMae;
 	
 	@Column(nullable=true)
-	private Long idFilho;
-		
-	@Column(nullable=true)
 	private String raca;
 	
 	@Column(nullable=true)
@@ -39,6 +36,7 @@ public class Animal {
 	private Character sexo;
 	
 	@Transient
+    @Column(name="foto")	
 	private String foto;
 	
 	@Transient
@@ -109,14 +107,6 @@ public class Animal {
 		this.idMae = idMae;
 	}
 
-	public Long getIdFilho() {
-		return idFilho;
-	}
-
-	public void setIdFilho(Long idFilho) {
-		this.idFilho = idFilho;
-	}
-
 	public String getRaca() {
 		return raca;
 	}
@@ -149,7 +139,7 @@ public class Animal {
 	@Override
 	public String toString() {
 		return "Animal [id=" + id + ", identificador=" + identificador + ", dtNascimento=" + dtNascimento + ", idPai="
-				+ idPai + ", idMae=" + idMae + ", idFilho=" + idFilho + ", raca=" + raca + ", sexo=" + sexo + "]";
+				+ idPai + ", idMae=" + idMae + ", raca=" + raca + ", sexo=" + sexo + ", foto="+foto+"]";
 	}
 
 	

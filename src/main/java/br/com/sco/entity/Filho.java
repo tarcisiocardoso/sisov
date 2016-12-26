@@ -11,18 +11,18 @@ public class Filho {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-
+	private Long idAnimal;
 	private Long idFilho;
-	private Long idPai;
+	
 
 	
 	public Filho() {
 		super();
 	}
 
-	public Filho(Long idFilho, Long idPai) {
+	public Filho(Long idAnimal, Long idFilho) {
 		super();
-		this.idPai = idPai;
+		this.idAnimal = idAnimal;
 		this.idFilho = idFilho;
 	}
 
@@ -34,20 +34,27 @@ public class Filho {
 		this.id = id;
 	}
 
-	public Long getIdAnimal() {
-		return idPai;
-	}
-
-	public void setIdAnimal(Long idAnimal) {
-		this.idPai = idAnimal;
-	}
-
 	public Long getIdPai() {
 		return idFilho;
 	}
 
 	public void setIdPai(Long idPai) {
 		this.idFilho = idPai;
+	}
+	public Long getIdAnimal() {
+		return idAnimal;
+	}
+
+	public void setIdAnimal(Long idAnimal) {
+		this.idAnimal = idAnimal;
+	}
+
+	public Long getIdFilho() {
+		return idFilho;
+	}
+
+	public void setIdFilho(Long idFilho) {
+		this.idFilho = idFilho;
 	}
 	
 }

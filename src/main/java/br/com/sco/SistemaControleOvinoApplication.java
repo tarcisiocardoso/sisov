@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 public class SistemaControleOvinoApplication {
 
-	public static String ROOT = "upload-dir";
+//	public static String ROOT = "upload-dir";
+	public static String ROOT = "/home/tarcisio/Documentos/workspace-sts-3.7.3.RELEASE/SistemaControleOvino/src/main/resources/static/foto";
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaControleOvinoApplication.class, args);
