@@ -1,0 +1,129 @@
+<!-- Page Heading -->
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">Tables</h1>
+		<ol class="breadcrumb">
+			<li><i class="fa fa-table"></i> <a routerLink="/tabelas">Tabela</a>
+			</li>
+			<li class="active"><i class="fa fa-fw fa-edit"></i>
+				{{animal.raca}}</li>
+			<li class="pull-right"><a (click)="goBack()">Back</a></li>
+			<li class="pull-right"><a (click)="cadastroPeso()">
+				<i class="fa fa-fw fa-wrench"></i> config</a>
+			</li>
+			<li class="pull-right"><a (click)="cadastroPeso()">
+				<i class="fa fa-fw fa-edit"></i> Peso</a>
+			</li>
+			<li class="pull-right"><a (click)="cadastroFoto()"><i
+					class="fa fa-fw fa-edit"></i> Foto</a></li>
+		</ol>
+	</div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-lg-6">
+		<h2>ID: {{animal.identificador}}</h2>
+		<chart [options]="options" (selection)="onChartSelection($event)">
+		<series (mouseOver)="onSeriesMouseOver($event)"> <point
+			(select)="onPointSelect($event)"></point> </series> </chart>
+
+		<p>
+			<b>{{serieName}}</b> is hovered
+		<p>
+		<p>
+			selection from <b>{{from}}</b> to <b>{{to}}</b>
+		</p>
+		<p>
+			<b>{{point}}</b> is selected
+		<p>
+	</div>
+	<div class="col-lg-6">
+		<h2>Outros detalhes</h2>
+		<div class="form-group input-group">
+			<div class="panel-body">
+				<strong> <img src="./foto/{{animal.foto}}"
+					alt="{{animal.raca}}" height="82" width="112">
+				</strong>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="isShowModalPeso" class="modal fade show in info"
+	role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					(click)="hideErrorMsg()">&times;</button>
+				<h4 class="modal-title">Adicionar novo peso</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="identificador">Peso</label> 
+					<input type="number" class="form-control" required [(ngModel)]="peso" placeholder="peso">
+					<label>Data</label>
+					<input type="date" class="form-control" required [(ngModel)]="data" >
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary"
+					(click)="salvaPeso()">
+					<i class="fa fa-save"></i> Salva
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="isShowModalFoto" class="modal fade show in info"
+	role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					(click)="hideErrorMsg()">&times;</button>
+				<h4 class="modal-title">Adicionar nova imagem</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					 <div class="col-lg-12">
+                            <label for="idFoto">Foto</label>
+					        <div class="form-group input-group">
+					        	<label>Data</label>
+								<input type="date" class="form-control" required [(ngModel)]="data" >
+					        	<form method="POST" enctype="multipart/form-data" action="/upload">
+									<span class="input-group-btn">
+										<input type="file" name="file" (change)="fileChangeEvent($event)" class="form-control" ngModel name="foto"/>
+										<button class="btn btn-default" type="button" (click)="upload()"><i class="fa fa-search"></i></button>
+									</span>
+								</form>
+                            </div>
+                            <div class="row">
+			                    <div class="col-lg-12">
+			                        <div class="panel panel-primary">
+			                            <div class="panel-heading">
+			                                <h3 class="panel-title"><i class="fa fa-file-image-o"></i> Foto</h3>
+			                            </div>
+			                            <div class="panel-body">
+			                              	<div [hidden]="escondeFoto" >
+			                                	<img #foto src="#" alt="Foto" class="media-object" height="300" width="400" />
+			                                </div>	
+			                            </div>
+			                        </div>
+			                    </div>
+		                	</div>
+                    </div>
+					
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary"
+					(click)="salvaFoto()">
+					<i class="fa fa-save"></i> Salva
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

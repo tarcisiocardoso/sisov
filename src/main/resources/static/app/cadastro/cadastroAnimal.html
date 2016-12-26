@@ -1,0 +1,234 @@
+<div id="wrapper">
+<div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+               <div class="row">
+		            <div class="col-lg-12">
+		                <ol class="breadcrumb">
+		                    <li>
+		                        <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+		                    </li>
+		                    <li class="active">
+		                        <i class="fa fa-edit"></i> Cadastro de animal
+		                    </li>
+		                </ol>
+		            </div>
+		        </div>
+                        
+
+<div  [hidden]="submitted">
+
+	<form *ngIf="active" (ngSubmit)="onSubmit(frm)" #frm="ngForm">
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-6">
+
+					    
+					    
+					      <div class="form-group">
+					        <label for="identificador">Identificador</label>
+					        <input type="text" class="form-control" required ngModel name="identificador">
+					        
+							<label>Data de nascimento</label>
+							<input type="date" class="form-control" required ngModel name="dtNascimento" >
+					      </div>
+
+
+					      <div class="form-group">
+                                <label>Sexo: </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="M" checked>Macho
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="F">Fêmea
+                                </label>
+                          </div>
+                          
+                          
+                            <div class="form-group input-group">
+					            <div class="panel-body">
+					            	Pai: 
+			                    		<strong [hidden]="animal.pai.id == 0">{{animal.pai.identificador}}  - {{animal.pai.raca}} - <img src="./foto/{{animal.pai.foto}}" alt="{{animal.pai.raca}}" height="82" width="112"> </strong>
+			                    </div>
+                                <span class="input-group-btn"><button class="btn btn-default" type="button" (click)="listaReprodutores(paiModal)">
+                                <i class="fa fa-search"></i></button></span>
+                            </div>
+                            
+					        <div class="form-group input-group">
+                                <div class="panel-body">
+					            	Mae: 
+			                    		<strong [hidden]="animal.mae.id == 0">{{animal.mae.identificador}}  - {{animal.mae.raca}} - <img src="./foto/{{animal.mae.foto}}" alt="{{animal.mae.raca}}" height="82" width="112"> </strong>
+			                    </div>
+                                <span class="input-group-btn"><button class="btn btn-default" type="button" (click)="listaMatriz(maeModal)">
+                                <i class="fa fa-search"></i></button></span>
+                            </div>
+
+ 							<div class="form-group input-group">
+						        <div class="panel-body">
+					            	<b>Raça</b>: 
+			                    		<strong>{{animal.raca}}</strong>
+			                    </div>
+                                <span class="input-group-btn"><button class="btn btn-default" type="button" (click)="listaRaca(racaModal)">
+                                <i class="fa fa-search"></i></button></span>
+					      	</div>
+					                                  
+                            <label>Peso</label>
+                             <div class="form-group input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-o-up"></i></span>
+                                <input type="text" class="form-control" ngModel name="peso" >
+                                
+                                <span class="input-group-addon">Kg</span>
+                            </div>
+                            
+                    </div>
+                    <div class="col-lg-6">
+                            
+                            <label for="idFoto">Foto</label>
+					        <div class="form-group input-group">
+					        	<form method="POST" enctype="multipart/form-data" action="/upload">
+									
+									<span class="input-group-btn">
+										<input type="file" name="file" (change)="fileChangeEvent($event)" class="form-control" ngModel name="foto"/>
+										<button class="btn btn-default" type="button" (click)="upload()"><i class="fa fa-search"></i></button>
+
+									</span>
+								</form>
+                            </div>
+                            <div class="row">
+			                    <div class="col-lg-12">
+			                        <div class="panel panel-primary">
+			                            <div class="panel-heading">
+			                                <h3 class="panel-title"><i class="fa fa-file-image-o"></i> Foto</h3>
+			                            </div>
+			                            <div class="panel-body">
+			                              	<div [hidden]="escondeFoto" >
+			                                	<img #foto src="#" alt="Foto do borrego" class="media-object"  />
+			                                </div>	
+			                            </div>
+			                        </div>
+			                    </div>
+		                	</div>
+                    </div>
+                </div>
+                <div>
+			      <button type="submit" class="btn btn-default" [disabled]="!frm.form.valid">Incluir</button>
+			      <button type="button" class="btn btn-default" (click)="newHero()">Novo cadastro</button>
+		        </div><br>
+                
+           </form>     
+           </div>
+                <div [hidden]="!submitted">
+					    <h2>Resgistro incluido com sucesso</h2>
+					    <div class="row">
+					      <div class="col-xs-3">Identificador</div>
+					      <div class="col-xs-9  pull-left">{{ animal.identificador }}</div>
+					    </div>
+					    <div class="row">
+					    	<div class="col-xs-3">Pai</div>
+					    	<div class="col-xs-9 pull-left">
+					      		<strong [hidden]="animal.pai.id == 0">{{animal.pai.identificador}}  - {{animal.pai.raca}} - <img src="./foto/{{animal.pai.foto}}" alt="{{animal.pai.raca}}" height="82" width="112"> </strong>
+					      	</div>
+					    </div>
+					    <div class="row">
+					      	<div class="col-xs-3">Mae:</div>
+					      	<div class="col-xs-9 pull-left">
+			                    <strong [hidden]="animal.mae.id == 0">{{animal.mae.identificador}}  - {{animal.mae.raca}} - <img src="./foto/{{animal.mae.foto}}" alt="{{animal.mae.raca}}" height="82" width="112"> </strong>
+							</div>
+					    </div>
+					    <div class="row">
+					      	<div class="col-xs-3">Animal</div>
+					      	<div class="col-xs-9 pull-left">
+			                    <strong [hidden]="animal.foto == null"><img src="./foto/{{animal.foto}}" alt="{{animal.raca}}" height="82" width="112"> </strong>
+							</div>
+					    </div>
+					    <br>
+					    <button class="btn btn-default" (click)="novoCadastro()">Novo cadastro</button>
+					  </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+
+<!-- /#page-wrapper -->
+</div>
+
+<div *ngIf="isShowModalReprodutor" class="modal fade show in info" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="hideErrorMsg()">&times;</button>
+                <h4 class="modal-title">Escolha Reprodutor</h4>
+            </div>
+            
+            <div class="modal-body">
+		        <ul>
+		            <li *ngFor="let p of reprodutores" [value]="p">
+		            	<a href="javascript:void(0)" (click)="escolhaReprodutor(p)" > {{p.identificador}}
+		            		<strong> raça </strong> {{p.raca}}
+		            		<img src="./foto/{{p.foto}}" alt="{{p.raca}}" height="82" width="112">
+		            	</a>
+		            </li>
+		        </ul>
+		    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="hideErrorMsg()">Close</button>
+            </div>
+		    
+        </div>
+    </div>
+</div>
+<div *ngIf="isShowModalMatriz" class="modal fade show in info" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="hideErrorMsg()">&times;</button>
+                <h4 class="modal-title">Escolha Matriz</h4>
+            </div>
+            
+            <div class="modal-body">
+		        <ul>
+		            <li *ngFor="let p of matriz" [value]="p">
+		            	<a href="javascript:void(0)" (click)="escolhaMatriz(p)" > {{p.identificador}}
+		            		<strong> raça </strong> {{p.raca}}
+		            		<img src="./foto/{{p.foto}}" alt="{{p.raca}}" height="82" width="112">
+		            	</a>
+		            </li>
+		        </ul>
+		    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="hideErrorMsg()">Close</button>
+            </div>
+		    
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="isShowModalRaca" class="modal fade show in info" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="hideErrorMsg()">&times;</button>
+                <h4 class="modal-title">Escolha Raça</h4>
+            </div>
+			<div class="modal-body">
+		        <ul>
+		            <li *ngFor="let p of racas" [value]="p">
+		            	<a href="javascript:void(0)" (click)="escolhaRaca(p)" >
+		            		<strong> {{p}}</strong>
+		            	</a>
+		            </li>
+		        </ul>
+		    </div>
+		    <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" (click)="paiModal.closeModal()">
+		            <i class="fa fa-chevron-left"></i> Go Back
+		        </button>
+		    </div>
+	    </div>
+    </div>
+</div>

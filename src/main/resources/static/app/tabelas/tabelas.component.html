@@ -1,0 +1,134 @@
+<!-- Page Heading -->
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">Tables</h1>
+		<ol class="breadcrumb">
+			<li><i class="fa fa-dashboard"></i> <a href="index.html">Dashboard</a>
+			</li>
+			<li class="active"><i class="fa fa-table"></i> Tables</li>
+		</ol>
+	</div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-lg-6">
+		<h2>Reprodutor</h2>
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Raça</th>
+						<th>Idade</th>
+						<th>Desempenho</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let p of reprodutores" [ngClass]="{'success': 1}" (click)="gotoDetail(p)">
+						<td>{{p.id}}</td>
+						<td>{{p.raca}}</td>
+						<td>{{getIdade( p.dtNascimento) }}</td>
+						<td>{{p.desempenho}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<h2>Matriz</h2>
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Idade</th>
+						<th>Parto Ano</th>
+						<th>Média Filhote</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let p of matriz" [ngClass]="{'danger': 1}" (click)="gotoDetail(p)">
+						<td>{{p.id}}</td>
+						<td>{{p.raca}}</td>
+						<td>{{getIdade( p.dtNascimento) }}</td>
+						<td>{{p.desempenho}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<nav aria-label="Page navigation">
+			  <ul class="pagination">
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			        <span class="sr-only">Previous</span>
+			      </a>
+			    </li>
+			    <li class="page-item"><a class="page-link" href="#">1</a></li>
+			    <li class="page-item"><a class="page-link" href="#">2</a></li>
+			    <li class="page-item"><a class="page-link" href="#">3</a></li>
+			    <li class="page-item"><a class="page-link" href="#">4</a></li>
+			    <li class="page-item"><a class="page-link" href="#">5</a></li>
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			        <span class="sr-only">Next</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-lg-6">
+		<h2>Borregos</h2>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Idade</th>
+						<th>Sexo</th>
+						<th>Peso</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let p of borrego" (click)="gotoDetail(p)">
+						<td>{{p.id}}</td>
+						<td>{{getIdade( p.dtNascimento) }}</td>
+						<td>{{p.sexo}}</td>
+						<td>{{p.peso}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<h2>Descarte Matriz</h2>
+		<div class="table-responsive">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Idade</th>
+						<th>Raça</th>
+						<th>Desempenho</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>-1</td>
+						<td>2 anos</td>
+						<td>RND</td>
+						<td>BAIXO</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- /.row -->
